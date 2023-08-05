@@ -42,6 +42,9 @@ const Question3 = () => {
           isClosable: "true",
           duration: 2000,
         });
+        setQuestion("");
+        setAnswers(["", "", "", ""]);
+        setCorrectAnswer("1");
       } else {
         console.error("Failed to store the question.");
       }

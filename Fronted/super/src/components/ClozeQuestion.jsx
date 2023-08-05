@@ -55,15 +55,24 @@ const RenderQuestions = () => {
         ) : (
           currentQuestion && (
             <Box key={currentQuestionIndex} mt="10px">
-              <Text
-                fontSize={"20px"}
-                fontWeight={"bold"}
+              <Flex
+                alignItems={"center"}
+              
+                gap="20px"
                 mb="10px"
-                color={"teal"}
               >
-                {" "}
-                {currentQuestion.answers.join(", ")}
-              </Text>
+                {currentQuestion.answers.map((categoryEl, index) => (
+                  <Box
+                    textAlign={"center"}
+                    bg={index % 2 === 0 ? "lightblue" : "lightgreen"}
+                    padding="5px"
+                   
+                    borderRadius={"5px"}
+                  >
+                    <Text fontSize={"17px"} key={index}>{`${categoryEl}`}</Text>
+                  </Box>
+                ))}
+              </Flex>
               <Text fontSize={"18px"}>
                 <span style={{ fontWeight: "bold" }}>
                   {" "}

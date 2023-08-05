@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { Box, Text, Button,Flex } from "@chakra-ui/react";
+import { Box, Text, Button,Flex, Heading } from "@chakra-ui/react";
 import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 const QuestionRender = () => {
   const [data, setData] = useState([]);
@@ -55,25 +55,60 @@ const QuestionRender = () => {
             {el.question}
           </Text>
           <Box>
-            <Flex alignItems={"center"} gap="10px" fontSize={"18px"} fontFamily={"sans-serif"} fontWeight={"500"} color="teal.900">
+            <Flex
+              alignItems={"center"}
+              gap="10px"
+              fontSize={"18px"}
+              fontFamily={"sans-serif"}
+              fontWeight={"500"}
+              color="teal.900"
+            >
               {el.item.map((itemEl, index) => (
-                <Text key={index}>{`Item  ${itemEl}`}</Text>
+                <Box
+                  textAlign={"center"}
+                  bg={index % 2 === 0 ? "lightblue" : "lightgreen"}
+                
+                  padding="6px"
+                  borderRadius={"5px"}
+                  // h="10rem"
+                >
+                  <Text key={index}>{` ${itemEl}`}</Text>
+                </Box>
               ))}
             </Flex>
-            {el.category.map((categoryEl, index) => (
-              <Text key={index}>{`Category ${categoryEl}`}</Text>
-            ))}
+            <Flex
+              alignItems={"center"}
+              justifyContent={"space-around"}
+              gap="10px"
+              mt="20px"
+            >
+              {el.category.map((categoryEl, index) => (
+                <Box
+                  textAlign={"center"}
+                  bg={index % 2 === 0 ? "lightblue" : "lightgreen"}
+                  w="20%"
+                  h="10rem"
+                  borderRadius={"5px"}
+                  // border="1px solid red"
+                >
+                  <Heading fontSize={"17px"}  padding="5px"  key={index}>{`${categoryEl}`}</Heading>
+                </Box>
+              ))}
+            </Flex>
           </Box>
         </Box>
       ))}
       <Box mt={4}>
-        <Button bg="none" mr={2} onClick={handlePrevPage}>
-          <button disabled={currentPage === 1}>
+        <Button bg="none" mr={2}>
+          <button onClick={handlePrevPage} disabled={currentPage === 1}>
             <ArrowLeftIcon />
           </button>
         </Button>
-        <Button bg="none" onClick={handleNextPage}>
-          <button disabled={indexOfLastQuestion >= data.length}>
+        <Button bg="none">
+          <button
+            onClick={handleNextPage}
+            disabled={indexOfLastQuestion >= data.length}
+          >
             <ArrowRightIcon />
           </button>
         </Button>

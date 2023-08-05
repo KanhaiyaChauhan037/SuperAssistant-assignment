@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import Navbar from "./Navbar";
-import { Heading, Text } from "@chakra-ui/react";
-import { Link } from "react-router-dom";
+import { Heading, Text,useToast } from "@chakra-ui/react";
+import { Link,useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const toast = useToast();
+  const navigate = useNavigate()
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -29,10 +30,23 @@ const Signup = () => {
 
       const data = await response.json();
       console.log("Signup Successful:", data);
-      alert("Signup Successfull:")
+       toast({
+         title: `Signup successfully`,
+         position: "top",
+         status: "success",
+         isClosable: "true",
+         duration: 2000,
+       });
+      navigate("/login")
     } catch (error) {
       console.error("Signup Failed:", error.message);
-      alert("Signup Failed:");
+      toast({
+        title: `Signup Failed`,
+        position: "top",
+        status: "error",
+        isClosable: "true",
+        duration: 2000,
+      });
 
     }
   };

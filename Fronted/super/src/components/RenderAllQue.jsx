@@ -61,7 +61,8 @@ const RenderAllQue = () => {
       <Box>
         {currentQuestions.map((el) => (
           <Box key={el._id} borderWidth="1px" p={4} mb={4} borderRadius="md">
-            <p>{el.question}</p>
+            <Text mb="10px" fontWeight={"500"} textAlign={"justify"}>{el.question}</Text>
+            <hr/>
             <Flex direction="column" mt={2} rowGap={"5px"}>
               {el.answers.map((answer, index) => (
                 <Checkbox

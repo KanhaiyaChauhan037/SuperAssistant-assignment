@@ -97,8 +97,11 @@ const FormInput = () => {
         position: "top",
         status: "success",
         isClosable: "true",
-        duration:2000
+        duration: 2000,
       });
+      setquestion([""]);
+      setCategories([""]);
+      setAnswers([""]);
     } catch (error) {
       console.error("Error storing form data:", error.message);
     }
