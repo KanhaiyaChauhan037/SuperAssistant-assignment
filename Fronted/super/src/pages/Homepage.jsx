@@ -3,13 +3,15 @@ import FormInput from "../components/FormInput";
 import Question2 from "../components/Question2";
 import Question3 from "../components/Question3";
 import { Box } from "@chakra-ui/react";
+import Navbar2 from "./Navbar2";
 const Homepage = () => {
   return (
     <div>
-      <Box padding="20px" border="1px solid red">
+      <Navbar2 />
+      <Box padding="20px">
         <FormInput />
         <Question2 />
-        <Question3/>
+        <Question3 />
       </Box>
     </div>
   );

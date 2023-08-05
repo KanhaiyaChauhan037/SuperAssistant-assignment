@@ -1,10 +1,12 @@
 
-import Homepage from "./pages/Homepage";
+import AllRoutes from "./pages/AllRoutes";
 
 function App() {
   return (
     <div>
-      <Homepage />
+
+      <AllRoutes />
+
     </div>
   );
 }

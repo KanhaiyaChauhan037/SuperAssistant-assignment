@@ -7,14 +7,17 @@ import {
   Heading,
   Select,
   Button,
+  useToast,
 } from "@chakra-ui/react";
 import { RxCross2 } from "react-icons/rx";
 
 const FormInput = () => {
+  const [question1, setquestion] = useState([""]);
   const [categories, setCategories] = useState([""]);
   const [answers, setAnswers] = useState([""]);
-  const [selectOptions, setSelectOptions] = useState([]);
 
+  const [selectOptions, setSelectOptions] = useState([]);
+  const toast = useToast();
   const handleAddCategory = (index) => {
     const updatedCategories = [...categories];
     updatedCategories.splice(index + 1, 0, "");
@@ -60,18 +63,45 @@ const FormInput = () => {
   };
 
   useEffect(() => {
-  
     const newSelectOptions = categories.filter(Boolean);
     setSelectOptions(newSelectOptions);
   }, [categories]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    console.log({ q: question1, a: answers, c: categories });
     const formData = {
-      question: "Question 1",
-      categories,
-      answers,
+      question: question1,
+      category: categories,
+      item: answers,
     };
-    console.log(formData);
+
+    try {
+      const response = await fetch(
+        "https://super-lvuk.onrender.com/api/categories",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to store data in the API.");
+      }
+
+      console.log("Form data stored successfully!");
+      toast({
+        title: `Question Created successfully`,
+        position: "top",
+        status: "success",
+        isClosable: "true",
+        duration:2000
+      });
+    } catch (error) {
+      console.error("Error storing form data:", error.message);
+    }
   };
 
   return (
@@ -85,10 +115,16 @@ const FormInput = () => {
         boxShadow="rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px"
       >
         <Box>
-          <Heading mb="10px" size="sm">
-            Question 1
-          </Heading>
-          <Input w="30rem" placeholder="enter name" />
+          <Text mb="20px" fontWeight="bold" fontSize="lg">
+            Categorize type Question
+          </Text>
+          <Input
+            w="30rem"
+            placeholder="enter name"
+            value={question1}
+            name="question"
+            onChange={(e) => setquestion(e.target.value)}
+          />
         </Box>
         {/* // categories section  */}
         <br />
@@ -173,8 +209,11 @@ const FormInput = () => {
             </Box>
           ))}
         </Box>
-
-        <Button onClick={handleSubmit}>Submit</Button>
+        <Box m="auto" w="15%">
+          <Button mt="20px" colorScheme="teal" onClick={handleSubmit}>
+            Add Question
+          </Button>
+        </Box>
       </Box>
     </Box>
   );

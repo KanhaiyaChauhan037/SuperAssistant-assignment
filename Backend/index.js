@@ -1,10 +1,29 @@
-const express = require('express')
+const express = require("express");
+const bodyParser = require("body-parser");
+const cors = require("cors");
+const mongoose = require("mongoose");
+const mcqRoutes = require("./Routes/Mcqroute");
+const Cloze = require("./Routes/Cloze");
+const Auth = require("./Routes/Authroute");
+const Categories = require("./Routes/Cat")
+const app = express();
+const port = 4000;
 
-const app = express()
+// Connect to MongoDB 
+mongoose.connect("mongodb+srv://super:super@cluster0.qh9lc37.mongodb.net/", {
+     useNewUrlParser: true,
+     useUnifiedTopology: true,
+});
 
-app.use(express.urlencoded({ extended: true}))
-app.use(express.json())
+app.use(bodyParser.json());
+app.use(cors());
 
-app.get('/', (req, res) => res.send('hello world!'))
+app.use("/api/mcq", mcqRoutes);
+app.use("/api/questions", Cloze);
+app.use("/api", Auth);
+app.use("/api/categories", Categories);
 
-app.listen(8080, () => {console.log('server started on port 8080')})
+
+app.listen(port, () => {
+     console.log(`Server is running on http://localhost:${port}`);
+});
