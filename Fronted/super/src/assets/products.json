@@ -1,0 +1,82 @@
+{
+    "products": [
+      {
+        "Name": "Mother Dairy Toned Fresh Milk",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/19925a.jpg?ts=1687759071",
+        "Weight": "500 ml",
+        "Price": "₹27"
+      },
+      {
+        "Name": "Amul Gold Milk",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/179a.jpg?ts=1690814493",
+        "Weight": "500 ml",
+        "Price": "₹78"
+      },
+      {
+        "Name": "Harvest Gold Hearty Brown Bread",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/24194a.jpg?ts=1690806087",
+        "Weight": "400 g",
+        "Price": "₹45"
+      },
+      {
+        "Name": "English Oven Pav",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/18402a.jpg?ts=1688464172",
+        "Weight": "300 g",
+        "Price": "₹40"
+      },
+      {
+        "Name": "Kellogg's Double Chocolaty Fills Chocos (Crunchy Outside, Creamy Inside)",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/373664a.jpg?ts=1686572968",
+        "Weight": "250 g",
+        "Price": "₹180"
+      },
+      {
+        "Name": "Quaker Fruit & Nuts Oats Muesli",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/507450a.jpg?ts=1690830158",
+        "Weight": "700 g",
+        "Price": "₹271"
+      },
+      {
+        "Name": "Saffola Natural Oats",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/24625a.jpg?ts=1688972650",
+        "Weight": "1 kg + 300 g",
+        "Price": "₹207"
+      },
+      {
+        "Name": "Fresh Malai Paneer (Daily Handcrafted)",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/523821a.jpg?ts=1690814164",
+        "Weight": "200 g",
+        "Price": "₹110"
+      },
+      {
+        "Name": "Bio Nutrients Pure Diet Gold Tofu",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/181150a.jpg?ts=1690814323",
+        "Weight": "200 g",
+        "Price": "₹60"
+      },
+      {
+        "Name": "Mother Dairy Mishti Doi",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/23947a.jpg?ts=1690814540",
+        "Weight": "400 g",
+        "Price": "₹75"
+      },
+      {
+        "Name": "Amul Salted Butter",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/160a.jpg?ts=1689327537",
+        "Weight": "500 g",
+        "Price": "₹275"
+      },
+      {
+        "Name": "Nestle Everyday Dairy Whitener",
+        "Image": "https://cdn.grofers.com/cdn-cgi/image/f=auto,fit=scale-down,q=50,metadata=none,w=180/app/images/products/sliding_image/10715a.jpg?ts=1688463548",
+        "Weight": "400 g",
+        "Price": "₹245"
+      }
+    ]
+  }
+  
+
+
+  
+
+

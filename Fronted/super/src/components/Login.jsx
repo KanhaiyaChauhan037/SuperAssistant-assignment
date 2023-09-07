@@ -1,121 +1,154 @@
-import { Heading, Text, useToast } from "@chakra-ui/react";
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import Navbar from "./Navbar";
-
-const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const toast = useToast();
-  const navigate = useNavigate();
-  const handleSubmit = async (e) => {
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  Checkbox,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
+import axios from "axios";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+const obj = {
+  email: "",
+  password: "",
+};
+export default function Login() {
+  const [data, setdata] = useState(obj);
+  const { email, password } = data;
+  const handlechange = (e) => {
     e.preventDefault();
-
+    setdata({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handleclick = async () => {
     try {
-      const response = await fetch(
-        "https://super-lvuk.onrender.com/api/login",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        }
-      );
+      if (!email || !password) {
+        alert("Please enter credentials");
+      } else {
+        const response = await axios.post(
+          "http://localhost:8080/user/login",
+          data
+        );
 
-      if (!response.ok) {
-        throw new Error("Login failed");
+        console.log(response.data);
+        alert(response.data.message);
       }
-
-      const data = await response.json();
-      console.log("Login Successful:", data);
-      toast({
-        title: `Login successfully`,
-        position: "top",
-        status: "success",
-        isClosable: "true",
-        duration: 2000,
-      });
-      navigate("/home");
     } catch (error) {
-      console.error("Login Failed:", error.message);
-      toast({
-        title: `Login Failed`,
-        position: "top",
-        status: "error",
-        isClosable: "true",
-        duration: 2000,
-      });
+      if (error.response) {
+        console.log("error", error.response.data.message);
+        alert(error.response.data.message);
+      } else {
+        console.log("error", error.message);
+        alert("An error occurred");
+      }
     }
   };
 
+  // const handleclick = async () => {
+  //   try {
+  //     if (!email || !password) {
+  //       alert("Please enter credentials");
+  //     } else {
+  //       const res = await fetch("http://localhost:8080/user/login", {
+  //         method: "POST",
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //         },
+  //         body: JSON.stringify(data),
+  //       });
+
+  //       const da = await res.json();
+
+  //       console.log(da);
+  //       alert(da.message);
+  //     }
+  //   } catch (error) {
+  //     console.log("error", error.message);
+  //     alert(error.message);
+  //   }
+  // };
+
   return (
-    <>
-      <Navbar />
-      <div className=" m-auto mt-20 w-full max-w-xs">
-        <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={handleSubmit}
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+        <Stack align={"center"}>
+          <Heading fontSize={"4xl"}>Sign in to your account</Heading>
+          <Text fontSize={"lg"} color={"gray.600"}>
+            to enjoy all of our cool features ✌️
+          </Text>
+        </Stack>
+        <Box
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
         >
-          <Heading size="md" textAlign={"center"} mb="15px">
-            Login
-          </Heading>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center justify-between">
-            <button
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Login
-            </button>{" "}
-          </div>
-
-          <Link to="/">
-            <Text
-              mt={"20px"}
-              textDecoration={"underline"}
-              color="blue"
-              textAlign={"center"}
-              fontSize={"14px"}
-            >
-              Create an account
+          <Stack spacing={4}>
+            <FormControl id="email">
+              <FormLabel>Email address</FormLabel>
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handlechange}
+              />
+            </FormControl>
+            <FormControl id="password">
+              <FormLabel>Password</FormLabel>
+              <Input
+                type="password"
+                name="password"
+                value={password}
+                onChange={handlechange}
+              />
+            </FormControl>
+            <Stack spacing={10}>
+              <Stack
+                direction={{ base: "column", sm: "row" }}
+                align={"start"}
+                justify={"space-between"}
+              >
+                <Checkbox>Remember me</Checkbox>
+                <Text color={"blue.400"}>Forgot password?</Text>
+              </Stack>
+              <Button
+                bg={"blue.400"}
+                color={"white"}
+                _hover={{
+                  bg: "blue.500",
+                }}
+                onClick={handleclick}
+              >
+                Sign in
+              </Button>
+            </Stack>
+          </Stack>
+          <Stack textAlign={"center"} mt="20px">
+            <Text>
+              {" "}
+              <Link
+                to="/"
+                style={{ color: "blue", textDecoration: "underline" }}
+              >
+                Create an account
+              </Link>
             </Text>
-          </Link>
-        </form>
-      </div>
-    </>
+          </Stack>
+        </Box>
+      </Stack>
+    </Flex>
   );
-};
-
-export default Login;
+}

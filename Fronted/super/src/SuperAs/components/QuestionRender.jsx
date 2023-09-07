@@ -5,7 +5,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@chakra-ui/icons";
 const QuestionRender = () => {
   const [data, setData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const questionsPerPage = 1; // Change this value to control the number of questions per page
+  const questionsPerPage = 1; 
 
   async function fetchData() {
     try {
@@ -70,7 +70,7 @@ const QuestionRender = () => {
                 
                   padding="6px"
                   borderRadius={"5px"}
-                  // h="10rem"
+              
                 >
                   <Text key={index}>{` ${itemEl}`}</Text>
                 </Box>
@@ -89,7 +89,7 @@ const QuestionRender = () => {
                   w="20%"
                   h="10rem"
                   borderRadius={"5px"}
-                  // border="1px solid red"
+               
                 >
                   <Heading fontSize={"17px"}  padding="5px"  key={index}>{`${categoryEl}`}</Heading>
                 </Box>

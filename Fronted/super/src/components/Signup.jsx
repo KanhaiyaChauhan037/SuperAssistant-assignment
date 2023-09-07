@@ -1,127 +1,196 @@
-import React, { useState } from "react";
-import Navbar from "./Navbar";
-import { Heading, Text,useToast } from "@chakra-ui/react";
-import { Link,useNavigate } from "react-router-dom";
+import {
+  Flex,
+  Box,
+  FormControl,
+  FormLabel,
+  Input,
+  InputGroup,
+  HStack,
+  InputRightElement,
+  Stack,
+  Button,
+  Heading,
+  Text,
+  useColorModeValue,
+} from "@chakra-ui/react";
 
-const Signup = () => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const toast = useToast();
-  const navigate = useNavigate()
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import { useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { useNavigate, Link } from "react-router-dom";
+import { FcGoogle, FcIphone } from "react-icons/fc";
+import firebaseConfig from "./firebaseconfig";
+import Phoneauth from "./Phoneauth";
+import axios from "axios";
+const obj = {
+  username: "",
+  email: "",
+  password: "",
+};
 
+export default function Signup() {
+  const [showPassword, setShowPassword] = useState(false);
+  const [data, setdata] = useState(obj);
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+  }
+  const handlegoogle = async () => {
     try {
-      const response = await fetch(
-        "https://super-lvuk.onrender.com/api/signup",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, email, password }),
-        }
-      );
+      const provider = new firebase.auth.GoogleAuthProvider();
 
-      if (!response.ok) {
-        throw new Error("Signup failed");
-      }
-
-      const data = await response.json();
-      console.log("Signup Successful:", data);
-       toast({
-         title: `Signup successfully`,
-         position: "top",
-         status: "success",
-         isClosable: "true",
-         duration: 2000,
-       });
-      navigate("/login")
+      await firebase.auth().signInWithPopup(provider);
+      console.log("Google Sign-in successful!");
     } catch (error) {
-      console.error("Signup Failed:", error.message);
-      toast({
-        title: `Signup Failed`,
-        position: "top",
-        status: "error",
-        isClosable: "true",
-        duration: 2000,
-      });
+      console.error("Error signing in with Google:", error.message);
+    }
+  };
 
+  const handlePhone = async () => {};
+  const { username, email, password } = data;
+  const handlechange = (e) => {
+    e.preventDefault();
+    setdata({
+      ...data,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const handlesignup = async () => {
+    try {
+      if (!username || !email || !password) {
+        console.log("enter credentials");
+        alert("Please fill all credentials");
+      } else {
+        const response = await axios.post(
+          "http://localhost:8080/user/signup",
+          data
+        );
+
+        console.log(response);
+        alert(response.data.message);
+      }
+    } catch (error) {
+      if (error.response) {
+        console.log("error", error.response.data);
+        alert(error.response.data.message);
+      } else {
+        console.log("error", error.message);
+        alert("An error occurred");
+      }
     }
   };
 
   return (
-    <>
-      <Navbar/>
-      {" "}
-      <div className=" m-auto mt-10 w-full max-w-xs">
-        <form
-          className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
-          onSubmit={handleSubmit}
+    <Flex
+      minH={"100vh"}
+      align={"center"}
+      justify={"center"}
+      bg={useColorModeValue("gray.50", "gray.800")}
+    >
+      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={2} px={6}>
+        <Stack align={"center"}>
+          <Heading fontSize={"4xl"} textAlign={"center"}>
+            Sign up
+          </Heading>
+          <Text fontSize={"lg"} color={"gray.600"}>
+            to enjoy all of our cool features ✌️
+          </Text>
+        </Stack>
+        <Box
+          rounded={"lg"}
+          bg={useColorModeValue("white", "gray.700")}
+          boxShadow={"lg"}
+          p={8}
+          w="30vw"
         >
-          <Heading size="md" textAlign={"center"} mb="10px" >Signup</Heading>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="username"
-            >
-              Username
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="username"
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+          <Stack spacing={4}>
+            <HStack>
+              <FormControl id="firstName" isRequired>
+                <FormLabel>User Name</FormLabel>
+                <Input
+                  type="text"
+                  name="username"
+                  value={username}
+                  onChange={handlechange}
+                />
+              </FormControl>
+            </HStack>
+            <FormControl id="email" isRequired>
+              <FormLabel>Email address</FormLabel>
+              <Input
+                type="email"
+                name="email"
+                value={email}
+                onChange={handlechange}
+              />
+            </FormControl>
+            <FormControl id="password" isRequired>
+              <FormLabel>Password</FormLabel>
+              <InputGroup>
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={password}
+                  onChange={handlechange}
+                />
+                <InputRightElement h={"full"}>
+                  <Button
+                    variant={"ghost"}
+                    onClick={() =>
+                      setShowPassword((showPassword) => !showPassword)
+                    }
+                  >
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </FormControl>
+            <Stack spacing={10} pt={2}>
+              <Button
+                loadingText="Submitting"
+                size="lg"
+                bg={"blue.400"}
+                color={"white"}
+                _hover={{
+                  bg: "blue.500",
+                }}
+                onClick={handlesignup}
+              >
+                Sign up
+              </Button>
+            </Stack>
+            <Stack pt={6}>
+              <Text align={"center"}>
+                Already a user?{" "}
+                <Link
+                  to="/login"
+                  style={{ color: "blue", textDecoration: "underline" }}
+                >
+                  Login
+                </Link>
+              </Text>
+            </Stack>
+          </Stack>
+          <Flex
+            alignItems={"center"}
+            justifyContent={"center"}
+            gap="20px"
+            mt="20px"
+          >
+            <FcGoogle
+              onClick={handlegoogle}
+              fontSize={"30px"}
+              cursor={"pointer"}
             />
-          </div>
-          <div className="mb-4">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="email"
-            >
-              Email
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="email"
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
-          <div className="mb-6">
-            <label
-              className="block text-gray-700 text-sm font-bold mb-2"
-              htmlFor="password"
-            >
-              Password
-            </label>
-            <input
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-              id="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-          <div className="flex items-center justify-center">
-            <button
-              className=" bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-              type="submit"
-            >
-              Sign Up
-            </button>
-          </div>
-          <Text mt="15px" textAlign={"center"}  fontSize={"14px"}>Already Have an account <Link color="blue" to="/login"><span style={{"color":"blue","textDecoration":"underline", "fontWeight":"bold"}}>Login</span> </Link></Text>
-        </form>
-      </div>
-    </>
+            {/* <FcIphone
+              onClick={handlePhone}
+              fontSize={"30px"}
+              cursor={"pointer"}
+            /> */}
+            <Phoneauth />
+          </Flex>
+        </Box>
+      </Stack>
+    </Flex>
   );
-};
-
-export default Signup;
+}
